@@ -25,20 +25,17 @@ AuthorSchema
         return (this.date_of_death.getYear() - this.date_of_birth.getYear()).toString();
     });
 
-// Virtual for author's formatted date of birth
+// Virtual for author's formatted lifespan
 AuthorSchema
-    .virtual('dob_formatted')
+    .virtual('lifespan_formatted')
     .get(function () {
-        return this.date_of_birth ?
+        var dob = this.date_of_birth ?
             (DateTime.fromJSDate(this.date_of_birth).toLocaleString(DateTime.DATE_MED)) : '';
-    });
 
-// Virtual for author's formatted date of death
-AuthorSchema
-    .virtual('dod_formatted')
-    .get(function () {
-        return this.date_of_death ?
+        var dod = this.date_of_death ?
             (DateTime.fromJSDate(this.date_of_death).toLocaleString(DateTime.DATE_MED)) : '';
+
+        return `${dob} - ${dod}`
     });
 
 // Virtual for author's URL
